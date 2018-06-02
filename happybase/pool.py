@@ -67,6 +67,7 @@ class ConnectionPool(object):
 
         connection_kwargs = kwargs
         connection_kwargs['autoconnect'] = False
+        self.connection_kwargs = connection_kwargs
 
         for i in range(size):
             connection = Connection(**connection_kwargs)
@@ -155,4 +156,8 @@ class ConnectionPool(object):
             # connection.
             if return_after_use:
                 del self._thread_connections.current
+                try:
+                    connection.tables()
+                except Exception:
+                    connection = Connection(**self.connection_kwargs)
                 self._return_connection(connection)
