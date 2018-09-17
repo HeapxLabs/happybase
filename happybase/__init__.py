@@ -2,7 +2,11 @@
 HappyBase, a developer-friendly Python library to interact with Apache
 HBase.
 """
-
+try:
+    from gevent import monkey
+    monkey.patch_all()
+except:
+    pass
 import pkg_resources as _pkg_resources
 import thriftpy as _thriftpy
 _thriftpy.load(

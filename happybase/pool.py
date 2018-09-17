@@ -1,16 +1,13 @@
 """
 HappyBase connection pool module.
 """
-try:
-    from gevent import monkey
-    monkey.patch_all()
-except:
-    pass
-
 import contextlib
 import logging
 import socket
-import threading
+try:
+    from gevent import threading
+except Exception:
+    import threading
 
 from six.moves import queue, range
 
